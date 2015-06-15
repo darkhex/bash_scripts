@@ -1,6 +1,12 @@
-#!/bin/bash
-ProcName="nginx" # указываем имя процесса openvpn
-Check=`pidof $ProcName` # Команда для проверки запущен ли процесс OpenVPN
+#!/bin/bash    
+#description    : check nginx_status    
+#author         :darkhex
+#version        :0.1
+#usage          :./ngninx.sh
+#notes          :       
+#============================================================================
+ProcName="nginx"
+Check=`pidof $ProcName`
 email="root.murashov@gmail.com"
 server=`ip a | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" | grep -v 127.0.0.1 | sort -u`
 host=`hostname`
