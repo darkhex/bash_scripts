@@ -1,42 +1,46 @@
-#!/bin/bash
-ProcName="nginx" # указываем имя процесса openvpn
-PingHost="10.10.0.1" # указываем хост, который доступен только если поднят OpenVPN канал
-Check=`pidof $ProcName` # Команда для проверки запущен ли процесс OpenVPN
-email="root.murashov@gmail.com"
-server=`ip a | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" | grep -v 127.0.0.1 | sort -u`
+#!/bin/bash    
+#description    : check vpn   
+#author         :darkhex
+#version        :0.1
+#usage          :./check_vpn.sh
+#notes          : Debian      
+#============================================================================
+ProcName="openvpn" 
+PingHost="8.8.8.8" 
+Check=`pidof $ProcName` 
 
-
-StatusNginx()
+StartVPN()
 {
-	systemctl status nginx.service | grep active | awk '{print $2}' 
+	/etc/init.d/openvpn start 
+	mail -s "Start openvpn " "$email" << EOF
+    Server: $server$
+    Hostname: $host
+	===================================================
+	`tail -n 10 /var/log/openvpn.log`
+	===================================================
+EOF
 }
 
-StartNginx()
+RestartVPN()
 {
-	systemctl start nginx.service # Стартуем процесс
-}
-
-RestartNginx()
-{
-	systemctl restart nginx.service # Рестартим процесс
+	/etc/init.d/openvpn restart 
+	mail -s "Start openvpn" "$email" << EOF
+    Server: $server$
+    Hostname: $host
+	===================================================
+	`tail -n 10 /var/log/openvpn.log`
+	===================================================
+EOF
 }
 
 if [ "$Check" = "" ]
 then
-	# Если процесс не запущен, то стартуем VPN
-	StartNginx
+	StartVPN
 else
-	# Если процесс запущен, то проверяем, доступен ли сервер VPN, если нет, рестартим.
-	StatusNginx
-    if [ $? -eq inactive ]; then
-		RestartNginx
-		 mail -s "Status nginx after trouble" "$email" << EOF
-		 $server
-	    ===================================================
-
-	    `systemctl status nginx.service`
-
-	    ===================================================
-EOF
+	#ping vpn host
+	count=$(ping -c 1 $PingHost | grep 'received' | awk -F',' '{ print $2 }' | awk '{ print $1 }')
+	if ! [ $count -eq 1 ]
+	then
+		RestartVPN
 	fi
 fi

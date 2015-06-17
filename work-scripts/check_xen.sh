@@ -5,7 +5,7 @@
 #usage          :./ngninx.sh
 #notes          :       
 #============================================================================
-email="root.murashov@gmail.com"
+email="your@gmail.com"
 server=`ip a | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" | grep -v 127.0.0.1 | sort -u`
 host=`hostname`
 
@@ -20,8 +20,6 @@ Failxen()
 	===================================================
 EOF
 }
-
-#xl top | tr '\r' '\n' | sed 's/[0-9][;][0-9][0-9][a-Z]/ /g' | col -bx | sed 1,4d | awk '{print $2,$5,$6}'
 
 xm list | awk '{print $5}' | grep -v State
 

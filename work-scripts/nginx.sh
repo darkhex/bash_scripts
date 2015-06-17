@@ -7,7 +7,7 @@
 #============================================================================
 ProcName="nginx"
 Check=`pidof $ProcName`
-email="root.murashov@gmail.com"
+email="your@gmail.com"
 server=`ip a | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" | grep -v 127.0.0.1 | sort -u`
 host=`hostname`
 
