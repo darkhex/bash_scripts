@@ -7,8 +7,8 @@
 #Links          : 
 #============================================================================
 
-RAID_OK=`arcconf GETCONFIG 1 | grep "Logical devices/Failed/Degraded" | awk {print $1;}`
-RAID_FAULT=`arcconf GETCONFIG 1 | grep "Logical devices/Failed/Degraded" | awk {print $1;}`
+RAID_OK=`arcconf getconfig 1 ld | egrep "Status of logical device" | awk '{print $6}' | grep Optimal`
+RAID_FAULT=`arcconf getconfig 1 ld | egrep "Status of logical device" | awk '{print $6}' | grep Degraded`
 email=root.murashov@gmail.com
 server=`ip a | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" | grep -v 127.0.0.1 | sort -u`
 host=`hostname`
@@ -26,7 +26,7 @@ mdadmstatistics()
     Server: $server$
     Hostname: $host
 	===================================================
-	`arcconf GETCONFIG 1`
+	`arcconf getconfig 1 pd|egrep "Device #|State\>|Reported Location|Reported Channel"`
 	===================================================
 EOF
 }
