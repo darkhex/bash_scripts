@@ -27,5 +27,5 @@ EOF
 if egrep  "apache| root" $output; then
         echo "OK" > /dev/null
 else
-    	systemctl restart php-fpm.service 
+    	RestartPHP
 fi

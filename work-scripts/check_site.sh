@@ -1,4 +1,11 @@
-#!/bin/bash
+#!/bin/bash -   
+#description    :check status of site
+#author         :darkhex
+#version        :0.1
+#usage          :./check_site.sh
+#notes          : 
+#Links          : 
+#============================================================================
 
 email=email@mail.ru
 
