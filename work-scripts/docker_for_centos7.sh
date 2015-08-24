@@ -65,12 +65,3 @@ EOF
 service network restart
 echo "All ok"
 exit 0
-
-
-
-
-
-
-
-
-
