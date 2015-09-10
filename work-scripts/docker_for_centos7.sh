@@ -15,6 +15,7 @@ sudo yum update -y
 yum install -y tmux htop mc bridge-utils install scl-utils vim 
 rpm -Uvh https://www.softwarecollections.org/en/scls/rhscl/python33/epel-7-x86_64/download/rhscl-python33-epel-7-x86_64.noarch.rpm
 yum -y install python33
+scl enable python33 bash
 easy_install pip
 pip install docker-py
 #https://docker-py.readthedocs.org/en/latest/#installation
