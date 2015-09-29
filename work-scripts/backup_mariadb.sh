@@ -59,7 +59,7 @@ install_percona()
 
 setup_user()
 {
-    `mysql -u root -awesak93!` << EOF
+    `mysql -u root -6666666` << EOF
 	CREATE USER '$user_backup'@'localhost' IDENTIFIED BY 'bkppassword';
 	GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO '$user_backup'@'localhost';
 	FLUSH PRIVILEGES;
